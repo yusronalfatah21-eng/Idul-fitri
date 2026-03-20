@@ -1,1 +1,603 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Selamat Idul Fitri | Yusron - Minal Aidin Wal Faizin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
 
+        :root {
+            --primary: #0B4F3C;
+            --secondary: #2C9A6E;
+            --accent: #E8B86B;
+            --warm: #E0844A;
+            --cream: #FFF6E5;
+            --light: #FFFDF9;
+            --dark: #0A2E24;
+            --gold: #D4A373;
+            --green-mosque: #1E6F5C;
+            --ketupat-gold: #F2C94C;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: radial-gradient(circle at 10% 30%, #FFF2DF, #FFE9CF);
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .ornament-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .ornament-bg .ketupat {
+            position: absolute;
+            background: rgba(212, 163, 115, 0.1);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            animation: floatKetupat 12s infinite ease-in-out;
+        }
+
+        @keyframes floatKetupat {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
+            50% { transform: translateY(-20px) rotate(5deg); opacity: 0.6; }
+            100% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
+        }
+
+        .lampion {
+            position: absolute;
+            width: 55px;
+            height: 70px;
+            background: radial-gradient(ellipse at 30% 35%, #F7B05E, #D9892E);
+            border-radius: 40% 40% 30% 30%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            animation: swayLamp 6s infinite alternate ease-in-out;
+        }
+        .lampion::before {
+            content: "🪔";
+            position: absolute;
+            top: -18px;
+            left: 18px;
+            font-size: 20px;
+            color: #FFD966;
+            text-shadow: 0 0 3px gold;
+        }
+        .lampion::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 22px;
+            width: 12px;
+            height: 12px;
+            background: #E67E22;
+            border-radius: 50%;
+            filter: blur(1px);
+        }
+        @keyframes swayLamp {
+            0% { transform: translateX(0px) rotate(0deg);}
+            100% { transform: translateX(12px) rotate(3deg);}
+        }
+
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .slides-wrapper {
+            display: flex;
+            width: 400%;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .slide {
+            width: 25%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5rem 1.8rem 6rem 1.8rem;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        .slide-content {
+            max-width: 780px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+            background: rgba(255, 255, 245, 0.96);
+            backdrop-filter: blur(2px);
+            border-radius: 48px;
+            padding: 2.8rem 2.5rem 3rem 2.5rem;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(212, 163, 115, 0.3), inset 0 1px 0 rgba(255,255,240,0.8);
+            position: relative;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(232, 184, 107, 0.4);
+        }
+
+        /* Custom scrollbar */
+        .slide-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        .slide-content::-webkit-scrollbar-track {
+            background: rgba(232, 184, 107, 0.1);
+            border-radius: 10px;
+        }
+        .slide-content::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #E8B86B, #D4A373);
+            border-radius: 10px;
+        }
+        .slide-content::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #D4A373, #B97F44);
+        }
+
+        .slide-content:hover {
+            transform: scale(1.01);
+            box-shadow: 0 35px 55px rgba(0, 0, 0, 0.25);
+        }
+
+        .slide-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, #D4A373, #F2C94C, #2C9A6E, #F2C94C, #D4A373);
+            background-size: 300% 100%;
+            animation: shineBorder 4s linear infinite;
+        }
+
+        @keyframes shineBorder {
+            0% { background-position: 0% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .ketupat-deco {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            width: 50px;
+            height: 50px;
+            opacity: 0.2;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23D4A373"><path d="M12,2 L15,6 L12,10 L9,6 L12,2 Z M12,12 L18,18 L12,22 L6,18 L12,12 Z"/></svg>') no-repeat center;
+            background-size: contain;
+            pointer-events: none;
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 1.8rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+            background: rgba(11, 79, 60, 0.8);
+            backdrop-filter: blur(12px);
+            padding: 12px 28px;
+            border-radius: 60px;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+            border: 1px solid rgba(242, 201, 76, 0.5);
+        }
+
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #F7E5C2;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+            box-shadow: 0 0 0 2px rgba(255,215,0,0.3);
+        }
+        .progress-dot.active {
+            background: linear-gradient(135deg, #F2C94C, #E6B422);
+            width: 38px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px #FFD966;
+        }
+
+        .nav-buttons {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1.3rem;
+            z-index: 100;
+        }
+        .nav-btn {
+            background: linear-gradient(135deg, #0B4F3C, #1F755B);
+            color: #FFF7E8;
+            border: none;
+            padding: 14px 34px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.3);
+            backdrop-filter: blur(4px);
+        }
+        .nav-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #E8B86B, #D4A373);
+            color: #0A2E24;
+            transform: translateY(-3px);
+            box-shadow: 0 18px 28px rgba(0,0,0,0.25);
+        }
+        .nav-btn:disabled {
+            background: #6C6B63;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .main-title {
+            font-family: 'Lora', serif;
+            font-size: clamp(2.2rem, 6vw, 3.6rem);
+            font-weight: 800;
+            color: #1D5A47;
+            text-align: center;
+            background: linear-gradient(135deg, #1F755B, #E8B86B);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 2px 2px 12px rgba(0,0,0,0.05);
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: #B97F44;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-align: center;
+        }
+        .text-content {
+            font-size: 1.08rem;
+            line-height: 1.8;
+            color: #1F3D35;
+        }
+        .highlight-box {
+            background: linear-gradient(105deg, rgba(44, 154, 110, 0.08), rgba(232, 184, 107, 0.1));
+            border-left: 6px solid #E8B86B;
+            border-radius: 28px;
+            padding: 1.8rem;
+            margin: 1.2rem 0;
+        }
+        .star {
+            display: inline-block;
+            color: #E8B86B;
+            font-size: 1.4rem;
+            animation: sparkle 1.8s infinite;
+        }
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.5; transform: scale(0.8);}
+            50% { opacity: 1; transform: scale(1.2);}
+        }
+
+        .form-group { margin-bottom: 1.5rem; }
+        .form-label { display: block; font-weight: 500; margin-bottom: 0.5rem; color: #1F3D35; }
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #EBD9B4;
+            background: #FFFEF7;
+            border-radius: 24px;
+            transition: 0.2s;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+        }
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #E8B86B;
+            box-shadow: 0 0 0 4px rgba(232,184,107,0.25);
+        }
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        .form-submit {
+            width: 100%;
+            background: linear-gradient(90deg, #0B4F3C, #2C9A6E);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .form-submit:hover:not(:disabled) {
+            background: linear-gradient(90deg, #2C9A6E, #0B4F3C);
+            transform: translateY(-2px);
+        }
+        .form-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .form-note {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 1rem;
+        }
+        .signature {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .signature-name {
+            font-family: 'Lora', serif;
+            font-size: 2rem;
+            color: #BD7A3A;
+            font-weight: 600;
+        }
+
+        .slide-content {
+            animation: fadeUp 0.7s ease-out;
+        }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 680px) {
+            .slide { 
+                padding: 4rem 1rem 5rem 1rem; 
+            }
+            .slide-content { 
+                padding: 2rem 1.5rem 2.5rem 1.5rem; 
+                border-radius: 32px;
+                max-height: 80vh;
+            }
+            .nav-btn { 
+                padding: 10px 20px; 
+                font-size: 0.85rem; 
+            }
+            .progress-container { 
+                gap: 12px; 
+                top: 1rem; 
+                padding: 8px 16px; 
+            }
+            .nav-buttons {
+                bottom: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="ornament-bg">
+    <div class="ketupat" style="width: 90px; height: 90px; top: 5%; left: -20px;"></div>
+    <div class="ketupat" style="width: 130px; height: 130px; bottom: 3%; right: -30px; animation-duration: 18s;"></div>
+    <div class="lampion" style="top: 12%; right: 3%;"></div>
+    <div class="lampion" style="bottom: 10%; left: 2%; width: 45px; height: 58px; animation-duration: 8s;"></div>
+    <div class="ketupat" style="width: 60px; height: 60px; top: 40%; left: 85%; opacity: 0.2;"></div>
+</div>
+<canvas id="particleCanvas"></canvas>
+
+<div class="progress-container">
+    <div class="progress-dot active" onclick="goToSlide(0)"></div>
+    <div class="progress-dot" onclick="goToSlide(1)"></div>
+    <div class="progress-dot" onclick="goToSlide(2)"></div>
+    <div class="progress-dot" onclick="goToSlide(3)"></div>
+</div>
+
+<div class="slider-container">
+    <div class="slides-wrapper" id="slidesWrapper">
+        <div class="slide">
+            <div class="slide-content">
+                <div class="ketupat-deco"></div>
+                <div style="text-align:center; margin-bottom: 1rem;">
+                    <span style="font-size: 4rem;">🌙✨</span>
+                </div>
+                <h1 class="main-title">🌙 Selamat Idul Fitri 🌙</h1>
+                <p class="subtitle">1446 Hijriah • 2026 Masehi</p>
+                <div style="width: 80px; height: 2px; background: #E8B86B; margin: 1rem auto;"></div>
+                <p class="text-content" style="text-align:center;"><strong>Assalamualaikum warahmatullahi wabarakatuh</strong></p>
+                <p class="text-content" style="text-align:center; margin-top: 1rem;">
+                    Halo semuanya! 🕌 Aku <strong style="color:#E8B86B;">Yusron</strong>, di momen Fitri yang penuh berkah ini, aku ingin menyampaikan rasa syukur dan sepatah dua patah dari hati.
+                </p>
+                <div style="display:flex; justify-content:center; gap:12px; margin: 20px 0;">
+                    <span class="star">⭐</span><span class="star">🌟</span><span class="star">⭐</span>
+                </div>
+                <p class="text-content" style="font-style:italic; text-align:center;">Yuk, lanjut ke lembaran baru yang lebih suci 👇</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <div class="ketupat-deco"></div>
+                <div style="text-align:center; font-size: 3rem; margin-bottom: 1rem;">🤲🍚</div>
+                <div class="highlight-box">
+                    <p style="text-align: center;"><strong style="font-size:1.4rem;">✿ Mohon Maaf Lahir dan Batin ✿</strong></p>
+                    <p>Sebelum ketupat disantap, sebelum silaturahmi terjalin, izinkan aku menyucikan hati. Jika ada kata yang menusuk, sikap yang kurang berkenan, atau janji yang belum tertunaikan —</p>
+                    <p style="background: rgba(232,184,107,0.2); border-radius: 20px; padding: 12px; margin: 12px 0; text-align: center;">
+                        💛 <strong>Dengan penuh ketulusan, aku memohon maaf.</strong> 💛
+                    </p>
+                    <p>Semoga kita semua kembali suci seperti bayi yang baru lahir, dan silaturahmi semakin erat.</p>
+                    <p style="font-style: italic; text-align: center;"><em>"Taqabbalallahu minna wa minkum, shiyamana wa shiyamakum"</em></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <div class="ketupat-deco"></div>
+                <div style="text-align:center; font-size: 3rem; margin-bottom: 1rem;">✨🕋✨</div>
+                <p class="text-content" style="font-weight:500; text-align: center;">Di hari kemenangan ini, ku doakan untukmu:</p>
+                <div class="highlight-box">
+                    <p>🌟 Diberi kesehatan lahir batin & keluarga harmonis</p>
+                    <p>🌟 Rezeki berlimpah dan berkah dalam setiap langkah</p>
+                    <p>🌟 Cita-cita mulia tercapai dengan ridha-Nya</p>
+                    <p>🌟 Perlindungan dari segala bala & musibah</p>
+                    <p>🌟 Hati yang lapang dan senantiasa bersyukur</p>
+                </div>
+                <div style="width: 80px; height: 2px; background: #E8B86B; margin: 1.5rem auto;"></div>
+                <p class="text-content" style="text-align: center;"><em>Semoga Allah mempertemukan kita dalam kebaikan, di dunia dan surga-Nya kelak. Aamiin.</em></p>
+                <div class="signature">
+                    <div style="font-style: italic; color: #2C9A6E;">Dengan hormat,</div>
+                    <div class="signature-name">Yusron & Keluarga</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content">
+                <div class="ketupat-deco"></div>
+                <div style="text-align:center; font-size: 2.8rem; margin-bottom: 1rem;">📩🕌</div>
+                <h2 class="main-title" style="font-size:1.9rem; margin-bottom: 1rem;">Sampaikan Pesan Lebaran</h2>
+                <p class="text-content" style="font-size:0.95rem; text-align: center;">Kritik, saran, atau maaf yang ingin kau sampaikan? Aku akan terima dengan hati terbuka. Pesan langsung masuk ke Telegram pribadiku 🤍</p>
+                <form action="https://formspree.io/f/xlgpvaak" method="POST" class="form-container" id="feedbackForm" style="margin-top: 1.5rem;">
+                    <div class="form-group">
+                        <label class="form-label">Nama / Panggilan</label>
+                        <input type="text" name="nama" class="form-input" placeholder="Contoh: Aisyah, Bang Joko, dll" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Pesan Lebaran / Maaf / Saran ✨</label>
+                        <textarea name="pesan" class="form-textarea" placeholder="Tulis apa yang ingin kamu sampaikan...💌" required></textarea>
+                    </div>
+                    <button type="submit" class="form-submit">Kirim Pesan ke Yusron 📮</button>
+                    <p class="form-note">🔐 Pesan akan dikirim langsung ke email Yusron secara aman.</p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="nav-buttons">
+    <button class="nav-btn" id="prevBtn" disabled>◀ Sebelumnya</button>
+    <button class="nav-btn" id="nextBtn">Selanjutnya ▶</button>
+</div>
+
+<script>
+    let currentIndex = 0;
+    const slidesWrapper = document.getElementById('slidesWrapper');
+    const totalSlides = 4;
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const dots = document.querySelectorAll('.progress-dot');
+
+    function updateSlider() {
+        const translateX = -currentIndex * 25;
+        slidesWrapper.style.transform = `translateX(${translateX}%)`;
+        dots.forEach((dot, idx) => {
+            if(idx === currentIndex) dot.classList.add('active');
+            else dot.classList.remove('active');
+        });
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex === totalSlides - 1;
+    }
+
+    window.goToSlide = (index) => {
+        currentIndex = index;
+        updateSlider();
+    };
+
+    prevBtn.addEventListener('click', () => {
+        if(currentIndex > 0) {
+            currentIndex--;
+            updateSlider();
+        }
+    });
+    nextBtn.addEventListener('click', () => {
+        if(currentIndex < totalSlides-1) {
+            currentIndex++;
+            updateSlider();
+        }
+    });
+
+    // Particle canvas animation
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let width, height;
+
+    function resizeCanvas() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+    }
+
+    function createParticles() {
+        particles = [];
+        const particleCount = 40;
+        for(let i=0; i<particleCount; i++) {
+            particles.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                radius: Math.random() * 3 + 1,
+                speedY: Math.random() * 0.5 + 0.1,
+                speedX: (Math.random() - 0.5) * 0.2,
+                opacity: Math.random() * 0.5 + 0.2,
+                color: Math.random() > 0.5 ? '#E8B86B' : '#D4A373'
+            });
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, width, height);
+        particles.forEach(p => {
+            p.y += p.speedY;
+            p.x += p.speedX;
+            if (p.y > height) p.y = -10;
+            if (p.x > width) p.x = 0;
+            if (p.x < 0) p.x = width;
+            
+            ctx.fillStyle = p.color;
+            ctx.globalAlpha = p.opacity;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fill();
+        });
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', () => {
+        resizeCanvas();
+        createParticles();
+    });
+
+    resizeCanvas();
+    createParticles();
+    animate();
+</script>
+</body>
+</html>
